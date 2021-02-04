@@ -1,22 +1,29 @@
 {
   "name": "simple-vue-and-webpack",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production"
+    "dev": "webpack-dev-server",
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development --watch",
+    "start": "webpack --mode development --watch & webpack-dev-server"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
     "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
+    "sass": "^1.32.6",
     "ts-loader": "^8.0.14",
     "typescript": "^4.1.3",
-    "webpack": "^5.20.1",
-    "webpack-cli": "^4.5.0"
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.8"
   },
   "dependencies": {
-    "core-js": "^3.8.3"
+    "core-js": "^3.8.3",
+    "vue": "^2.6.12"
   }
 }

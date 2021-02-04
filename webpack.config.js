@@ -1,36 +1,80 @@
+// TODO: 環境変数化
+const MODE = 'development'
+
 const path = require('path')
 
+const TerserPlugin = require('terser-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 module.exports = {
-  mode: 'production',
-  target: ['web', 'es5'],
   entry: {
-    index: path.join(__dirname, '/src/index.ts')
+    index: path.join(__dirname, '/src/main.ts')
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'main.js'
+    filename: 'bundle.js'
   },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    open: true,
+    watchContentBase: true,
+    port: 8080,
+  },
+  mode: MODE,
+  devtool: 'inline-source-map',
+  target: 'web',
   module: {
     rules: [
       {
         test: /\.ts$/,
-        use: [
-          {
-            loader: 'ts-loader'
-          }
-        ]
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+          appendTsSuffixTo: ['\\.vue$']
+        }
       },
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: "babel-loader"
           }
         ]
-      }
+      },
+      {
+        test: /\.css$/,
+        use: ["vue-style-loader", "css-loader"]
+      },
+      {
+        test: /\.vue$/,
+        loader: "vue-loader"
+      },
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
-  }
+    alias: {
+      vue$: 'vue/dist/vue.esm.js'
+    },
+    extensions: ['*', '.ts', '.js', '.vue', '.json']
+  },
+  plugins: [new VueLoaderPlugin()],
+  optimization: {
+    minimizer:
+      MODE === 'production'
+        ? [
+          new TerserPlugin({
+            terserOptions: {
+              ecma: 6,
+              parallel: true,
+              sourceMap: true,
+              warnings: false,
+              compress: {
+                drop_console: true
+              }
+            }
+          })
+        ]
+        : []
+  },
 }
