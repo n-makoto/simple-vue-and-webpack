@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server",
+    "dev": "webpack-dev-server --hot",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development --watch",
     "start": "webpack --mode development --watch & webpack-dev-server"
