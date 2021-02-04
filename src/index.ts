@@ -1,5 +1,4 @@
-// import 'core-js'
-import 'core-js/es6/array'
+import 'core-js'
 
 window.addEventListener('load', () => {
   alert(Array.from('InternetExplorer'))
